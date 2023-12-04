@@ -1,4 +1,4 @@
-import { cards } from './emoji.js';
+import { cards } from './data/emoji.js';
 
 const cardsWrapper = document.querySelector('.section__cards');
 
@@ -25,8 +25,6 @@ const createCard = ({ title, symbol, keywords }) => {
   <p class = "">${filterWords(keywords)}</p>`;
   return card;
 };
-
-const keyWor = document.querySelector('.card__text');
 
 const renderCards = (cards) => {
   cardsWrapper.innerHTML = '';
