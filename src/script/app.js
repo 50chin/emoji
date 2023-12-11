@@ -1,6 +1,11 @@
 const API_URL = `http://api.codeoverdose.space/api/emoji/v1/find/?query=`;
 
 const cardsWrapper = document.querySelector('.section__cards');
+
+const filterWords = (str) => {
+  return [...new Set(str.split(' '))].join(' ');
+};
+
 const getData = async (url, query = '') => {
   try {
     const res = await fetch(url + query);
@@ -25,7 +30,7 @@ const createCard = ({ title, symbol, keywords }) => {
 
   card.innerHTML = `<h3 class = card__icon> ${symbol} </h3>
   <p class = "card__name">${title}</p>
-  <p class = "">${keywords}</p>`;
+  <p class = "">${filterWords(keywords)}</p>`;
   return card;
 };
 
