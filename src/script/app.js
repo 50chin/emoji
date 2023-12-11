@@ -1,19 +1,22 @@
-import { cards } from './data/emoji.js';
+const API_URL = `http://api.codeoverdose.space/api/emoji/v1/find/?query=`;
 
 const cardsWrapper = document.querySelector('.section__cards');
-
-const filterWords = (str) => {
-  return [...new Set(str.split(' '))].join(' ');
+const getData = async (url, query = '') => {
+  try {
+    const res = await fetch(url + query);
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
+const cards = await getData(API_URL);
+
 const input = document.querySelector('.input');
-input.addEventListener('input', () => {
-  const filteredCards = cards.filter(
-    (key) =>
-      key.keywords.includes(input.value.toLowerCase().trim()) ||
-      key.title.includes(input.value.toLowerCase().trim())
-  );
-  renderCards(filteredCards);
+input.addEventListener('input', async () => {
+  const cards = await getData(API_URL, input.value);
+
+  renderCards(cards);
 });
 
 const createCard = ({ title, symbol, keywords }) => {
@@ -22,7 +25,7 @@ const createCard = ({ title, symbol, keywords }) => {
 
   card.innerHTML = `<h3 class = card__icon> ${symbol} </h3>
   <p class = "card__name">${title}</p>
-  <p class = "">${filterWords(keywords)}</p>`;
+  <p class = "">${keywords}</p>`;
   return card;
 };
 
